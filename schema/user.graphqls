@@ -1,0 +1,7 @@
+type Users {
+  id: Int!
+  user_name: String!
+  password: String!
+  create_at: Timestamp!
+  role_id: Int!
+}

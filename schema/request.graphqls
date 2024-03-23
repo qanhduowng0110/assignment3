@@ -1,0 +1,12 @@
+type Requests {
+  id: Int
+  request_url: String
+  request_method: String
+  request_headers: JSON
+  request_body: JSON
+  response_status_code: Int
+  response_body: JSON
+  request_timestamp: Timestamp
+  create_at: Timestamp
+  update_at: Timestamp
+}

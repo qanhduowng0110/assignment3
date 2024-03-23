@@ -1,0 +1,6 @@
+type AssociatedEvent {
+  id: Int!
+  earthquake_id: [Int]!
+  create_at: Timestamp!
+  update_at: Timestamp!
+}

@@ -1,0 +1,21 @@
+scalar Timestamp
+scalar JSON
+
+type Earthquakes {
+  id: Int!
+  location_id: Int!
+  time_id: Int!
+  magitude_id: Int!
+  url: String
+  status: String
+  tsunami: String
+  net: String
+  code: String
+  sources: String
+  nst: Int
+  dmin: Float
+  rms: Float
+  gap: Float
+  create_at: Timestamp!
+  update_at: Timestamp!
+}

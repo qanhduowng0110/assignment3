@@ -1,0 +1,6 @@
+type Times {
+  id: Int!
+  date_time: Timestamp!
+  create_at: Timestamp!
+  update_at: Timestamp!
+}

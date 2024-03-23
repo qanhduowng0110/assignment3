@@ -1,0 +1,9 @@
+type Location {
+  id: Int!
+  longitude: Float!
+  latitude: Float!
+  dept: Float!
+  place: String!
+  create_at: Timestamp!
+  update_at: Timestamp!
+}

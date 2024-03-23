@@ -1,0 +1,19 @@
+input EarthquakeFilter {
+  magnitude: Float
+  place: String
+  type_earthquake: String
+}
+ 
+input PaginationInput {
+  limit: Int
+  offset: Int
+}
+
+input DayInput {
+  day: Int
+}
+ 
+type Query {
+  listEarthquakes(filter: EarthquakeFilter, pagination: PaginationInput, day: DayInput): [Earthquakes]
+}
+
