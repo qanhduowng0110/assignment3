@@ -93,53 +93,6 @@ func (eu *EarthquakeUpdate) ClearMagitudeID() *EarthquakeUpdate {
 	return eu
 }
 
-// SetDept sets the "dept" field.
-func (eu *EarthquakeUpdate) SetDept(f float64) *EarthquakeUpdate {
-	eu.mutation.ResetDept()
-	eu.mutation.SetDept(f)
-	return eu
-}
-
-// SetNillableDept sets the "dept" field if the given value is not nil.
-func (eu *EarthquakeUpdate) SetNillableDept(f *float64) *EarthquakeUpdate {
-	if f != nil {
-		eu.SetDept(*f)
-	}
-	return eu
-}
-
-// AddDept adds f to the "dept" field.
-func (eu *EarthquakeUpdate) AddDept(f float64) *EarthquakeUpdate {
-	eu.mutation.AddDept(f)
-	return eu
-}
-
-// ClearDept clears the value of the "dept" field.
-func (eu *EarthquakeUpdate) ClearDept() *EarthquakeUpdate {
-	eu.mutation.ClearDept()
-	return eu
-}
-
-// SetSignificance sets the "significance" field.
-func (eu *EarthquakeUpdate) SetSignificance(s string) *EarthquakeUpdate {
-	eu.mutation.SetSignificance(s)
-	return eu
-}
-
-// SetNillableSignificance sets the "significance" field if the given value is not nil.
-func (eu *EarthquakeUpdate) SetNillableSignificance(s *string) *EarthquakeUpdate {
-	if s != nil {
-		eu.SetSignificance(*s)
-	}
-	return eu
-}
-
-// ClearSignificance clears the value of the "significance" field.
-func (eu *EarthquakeUpdate) ClearSignificance() *EarthquakeUpdate {
-	eu.mutation.ClearSignificance()
-	return eu
-}
-
 // SetURL sets the "url" field.
 func (eu *EarthquakeUpdate) SetURL(s string) *EarthquakeUpdate {
 	eu.mutation.SetURL(s)
@@ -575,21 +528,6 @@ func (eu *EarthquakeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := eu.mutation.Dept(); ok {
-		_spec.SetField(earthquake.FieldDept, field.TypeFloat64, value)
-	}
-	if value, ok := eu.mutation.AddedDept(); ok {
-		_spec.AddField(earthquake.FieldDept, field.TypeFloat64, value)
-	}
-	if eu.mutation.DeptCleared() {
-		_spec.ClearField(earthquake.FieldDept, field.TypeFloat64)
-	}
-	if value, ok := eu.mutation.Significance(); ok {
-		_spec.SetField(earthquake.FieldSignificance, field.TypeString, value)
-	}
-	if eu.mutation.SignificanceCleared() {
-		_spec.ClearField(earthquake.FieldSignificance, field.TypeString)
-	}
 	if value, ok := eu.mutation.URL(); ok {
 		_spec.SetField(earthquake.FieldURL, field.TypeString, value)
 	}
@@ -931,53 +869,6 @@ func (euo *EarthquakeUpdateOne) SetNillableMagitudeID(i *int) *EarthquakeUpdateO
 // ClearMagitudeID clears the value of the "magitude_id" field.
 func (euo *EarthquakeUpdateOne) ClearMagitudeID() *EarthquakeUpdateOne {
 	euo.mutation.ClearMagitudeID()
-	return euo
-}
-
-// SetDept sets the "dept" field.
-func (euo *EarthquakeUpdateOne) SetDept(f float64) *EarthquakeUpdateOne {
-	euo.mutation.ResetDept()
-	euo.mutation.SetDept(f)
-	return euo
-}
-
-// SetNillableDept sets the "dept" field if the given value is not nil.
-func (euo *EarthquakeUpdateOne) SetNillableDept(f *float64) *EarthquakeUpdateOne {
-	if f != nil {
-		euo.SetDept(*f)
-	}
-	return euo
-}
-
-// AddDept adds f to the "dept" field.
-func (euo *EarthquakeUpdateOne) AddDept(f float64) *EarthquakeUpdateOne {
-	euo.mutation.AddDept(f)
-	return euo
-}
-
-// ClearDept clears the value of the "dept" field.
-func (euo *EarthquakeUpdateOne) ClearDept() *EarthquakeUpdateOne {
-	euo.mutation.ClearDept()
-	return euo
-}
-
-// SetSignificance sets the "significance" field.
-func (euo *EarthquakeUpdateOne) SetSignificance(s string) *EarthquakeUpdateOne {
-	euo.mutation.SetSignificance(s)
-	return euo
-}
-
-// SetNillableSignificance sets the "significance" field if the given value is not nil.
-func (euo *EarthquakeUpdateOne) SetNillableSignificance(s *string) *EarthquakeUpdateOne {
-	if s != nil {
-		euo.SetSignificance(*s)
-	}
-	return euo
-}
-
-// ClearSignificance clears the value of the "significance" field.
-func (euo *EarthquakeUpdateOne) ClearSignificance() *EarthquakeUpdateOne {
-	euo.mutation.ClearSignificance()
 	return euo
 }
 
@@ -1445,21 +1336,6 @@ func (euo *EarthquakeUpdateOne) sqlSave(ctx context.Context) (_node *Earthquake,
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := euo.mutation.Dept(); ok {
-		_spec.SetField(earthquake.FieldDept, field.TypeFloat64, value)
-	}
-	if value, ok := euo.mutation.AddedDept(); ok {
-		_spec.AddField(earthquake.FieldDept, field.TypeFloat64, value)
-	}
-	if euo.mutation.DeptCleared() {
-		_spec.ClearField(earthquake.FieldDept, field.TypeFloat64)
-	}
-	if value, ok := euo.mutation.Significance(); ok {
-		_spec.SetField(earthquake.FieldSignificance, field.TypeString, value)
-	}
-	if euo.mutation.SignificanceCleared() {
-		_spec.ClearField(earthquake.FieldSignificance, field.TypeString)
 	}
 	if value, ok := euo.mutation.URL(); ok {
 		_spec.SetField(earthquake.FieldURL, field.TypeString, value)

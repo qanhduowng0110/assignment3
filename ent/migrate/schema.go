@@ -33,8 +33,6 @@ var (
 	// EarthquakesColumns holds the columns for the "Earthquakes" table.
 	EarthquakesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "dept", Type: field.TypeFloat64, Nullable: true},
-		{Name: "significance", Type: field.TypeString, Nullable: true},
 		{Name: "url", Type: field.TypeString, Nullable: true},
 		{Name: "status", Type: field.TypeString, Nullable: true},
 		{Name: "tsunami", Type: field.TypeInt32, Nullable: true},
@@ -59,19 +57,19 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "Earthquakes_Location_earthquakes",
-				Columns:    []*schema.Column{EarthquakesColumns[15]},
+				Columns:    []*schema.Column{EarthquakesColumns[13]},
 				RefColumns: []*schema.Column{LocationColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "Earthquakes_Magnitudes_earthquakes",
-				Columns:    []*schema.Column{EarthquakesColumns[16]},
+				Columns:    []*schema.Column{EarthquakesColumns[14]},
 				RefColumns: []*schema.Column{MagnitudesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "Earthquakes_Times_earthquakes",
-				Columns:    []*schema.Column{EarthquakesColumns[17]},
+				Columns:    []*schema.Column{EarthquakesColumns[15]},
 				RefColumns: []*schema.Column{TimesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},

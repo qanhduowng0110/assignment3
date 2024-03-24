@@ -18,10 +18,6 @@ const (
 	FieldTimeID = "time_id"
 	// FieldMagitudeID holds the string denoting the magitude_id field in the database.
 	FieldMagitudeID = "magitude_id"
-	// FieldDept holds the string denoting the dept field in the database.
-	FieldDept = "dept"
-	// FieldSignificance holds the string denoting the significance field in the database.
-	FieldSignificance = "significance"
 	// FieldURL holds the string denoting the url field in the database.
 	FieldURL = "url"
 	// FieldStatus holds the string denoting the status field in the database.
@@ -101,8 +97,6 @@ var Columns = []string{
 	FieldLocationID,
 	FieldTimeID,
 	FieldMagitudeID,
-	FieldDept,
-	FieldSignificance,
 	FieldURL,
 	FieldStatus,
 	FieldTsunami,
@@ -148,16 +142,6 @@ func ByTimeID(opts ...sql.OrderTermOption) OrderOption {
 // ByMagitudeID orders the results by the magitude_id field.
 func ByMagitudeID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldMagitudeID, opts...).ToFunc()
-}
-
-// ByDept orders the results by the dept field.
-func ByDept(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDept, opts...).ToFunc()
-}
-
-// BySignificance orders the results by the significance field.
-func BySignificance(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldSignificance, opts...).ToFunc()
 }
 
 // ByURL orders the results by the url field.

@@ -26,10 +26,6 @@ type Earthquake struct {
 	TimeID int `json:"time_id,omitempty"`
 	// MagitudeID holds the value of the "magitude_id" field.
 	MagitudeID int `json:"magitude_id,omitempty"`
-	// Dept holds the value of the "dept" field.
-	Dept float64 `json:"dept,omitempty"`
-	// Significance holds the value of the "significance" field.
-	Significance string `json:"significance,omitempty"`
 	// URL holds the value of the "url" field.
 	URL string `json:"url,omitempty"`
 	// Status holds the value of the "status" field.
@@ -133,11 +129,11 @@ func (*Earthquake) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case earthquake.FieldDept, earthquake.FieldDmin, earthquake.FieldRms, earthquake.FieldGap:
+		case earthquake.FieldDmin, earthquake.FieldRms, earthquake.FieldGap:
 			values[i] = new(sql.NullFloat64)
 		case earthquake.FieldID, earthquake.FieldLocationID, earthquake.FieldTimeID, earthquake.FieldMagitudeID, earthquake.FieldTsunami, earthquake.FieldNst:
 			values[i] = new(sql.NullInt64)
-		case earthquake.FieldSignificance, earthquake.FieldURL, earthquake.FieldStatus, earthquake.FieldNet, earthquake.FieldCode, earthquake.FieldSources:
+		case earthquake.FieldURL, earthquake.FieldStatus, earthquake.FieldNet, earthquake.FieldCode, earthquake.FieldSources:
 			values[i] = new(sql.NullString)
 		case earthquake.FieldCreatedAt, earthquake.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -179,18 +175,6 @@ func (e *Earthquake) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field magitude_id", values[i])
 			} else if value.Valid {
 				e.MagitudeID = int(value.Int64)
-			}
-		case earthquake.FieldDept:
-			if value, ok := values[i].(*sql.NullFloat64); !ok {
-				return fmt.Errorf("unexpected type %T for field dept", values[i])
-			} else if value.Valid {
-				e.Dept = value.Float64
-			}
-		case earthquake.FieldSignificance:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field significance", values[i])
-			} else if value.Valid {
-				e.Significance = value.String
 			}
 		case earthquake.FieldURL:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -333,12 +317,6 @@ func (e *Earthquake) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("magitude_id=")
 	builder.WriteString(fmt.Sprintf("%v", e.MagitudeID))
-	builder.WriteString(", ")
-	builder.WriteString("dept=")
-	builder.WriteString(fmt.Sprintf("%v", e.Dept))
-	builder.WriteString(", ")
-	builder.WriteString("significance=")
-	builder.WriteString(e.Significance)
 	builder.WriteString(", ")
 	builder.WriteString("url=")
 	builder.WriteString(e.URL)

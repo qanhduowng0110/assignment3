@@ -66,34 +66,6 @@ func (ec *EarthquakeCreate) SetNillableMagitudeID(i *int) *EarthquakeCreate {
 	return ec
 }
 
-// SetDept sets the "dept" field.
-func (ec *EarthquakeCreate) SetDept(f float64) *EarthquakeCreate {
-	ec.mutation.SetDept(f)
-	return ec
-}
-
-// SetNillableDept sets the "dept" field if the given value is not nil.
-func (ec *EarthquakeCreate) SetNillableDept(f *float64) *EarthquakeCreate {
-	if f != nil {
-		ec.SetDept(*f)
-	}
-	return ec
-}
-
-// SetSignificance sets the "significance" field.
-func (ec *EarthquakeCreate) SetSignificance(s string) *EarthquakeCreate {
-	ec.mutation.SetSignificance(s)
-	return ec
-}
-
-// SetNillableSignificance sets the "significance" field if the given value is not nil.
-func (ec *EarthquakeCreate) SetNillableSignificance(s *string) *EarthquakeCreate {
-	if s != nil {
-		ec.SetSignificance(*s)
-	}
-	return ec
-}
-
 // SetURL sets the "url" field.
 func (ec *EarthquakeCreate) SetURL(s string) *EarthquakeCreate {
 	ec.mutation.SetURL(s)
@@ -392,14 +364,6 @@ func (ec *EarthquakeCreate) createSpec() (*Earthquake, *sqlgraph.CreateSpec) {
 	if id, ok := ec.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
-	}
-	if value, ok := ec.mutation.Dept(); ok {
-		_spec.SetField(earthquake.FieldDept, field.TypeFloat64, value)
-		_node.Dept = value
-	}
-	if value, ok := ec.mutation.Significance(); ok {
-		_spec.SetField(earthquake.FieldSignificance, field.TypeString, value)
-		_node.Significance = value
 	}
 	if value, ok := ec.mutation.URL(); ok {
 		_spec.SetField(earthquake.FieldURL, field.TypeString, value)

@@ -608,9 +608,6 @@ type EarthquakeMutation struct {
 	op                       Op
 	typ                      string
 	id                       *int
-	dept                     *float64
-	adddept                  *float64
-	significance             *string
 	url                      *string
 	status                   *string
 	tsunami                  *int32
@@ -895,125 +892,6 @@ func (m *EarthquakeMutation) MagitudeIDCleared() bool {
 func (m *EarthquakeMutation) ResetMagitudeID() {
 	m.magnitude = nil
 	delete(m.clearedFields, earthquake.FieldMagitudeID)
-}
-
-// SetDept sets the "dept" field.
-func (m *EarthquakeMutation) SetDept(f float64) {
-	m.dept = &f
-	m.adddept = nil
-}
-
-// Dept returns the value of the "dept" field in the mutation.
-func (m *EarthquakeMutation) Dept() (r float64, exists bool) {
-	v := m.dept
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldDept returns the old "dept" field's value of the Earthquake entity.
-// If the Earthquake object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *EarthquakeMutation) OldDept(ctx context.Context) (v float64, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldDept is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldDept requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldDept: %w", err)
-	}
-	return oldValue.Dept, nil
-}
-
-// AddDept adds f to the "dept" field.
-func (m *EarthquakeMutation) AddDept(f float64) {
-	if m.adddept != nil {
-		*m.adddept += f
-	} else {
-		m.adddept = &f
-	}
-}
-
-// AddedDept returns the value that was added to the "dept" field in this mutation.
-func (m *EarthquakeMutation) AddedDept() (r float64, exists bool) {
-	v := m.adddept
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ClearDept clears the value of the "dept" field.
-func (m *EarthquakeMutation) ClearDept() {
-	m.dept = nil
-	m.adddept = nil
-	m.clearedFields[earthquake.FieldDept] = struct{}{}
-}
-
-// DeptCleared returns if the "dept" field was cleared in this mutation.
-func (m *EarthquakeMutation) DeptCleared() bool {
-	_, ok := m.clearedFields[earthquake.FieldDept]
-	return ok
-}
-
-// ResetDept resets all changes to the "dept" field.
-func (m *EarthquakeMutation) ResetDept() {
-	m.dept = nil
-	m.adddept = nil
-	delete(m.clearedFields, earthquake.FieldDept)
-}
-
-// SetSignificance sets the "significance" field.
-func (m *EarthquakeMutation) SetSignificance(s string) {
-	m.significance = &s
-}
-
-// Significance returns the value of the "significance" field in the mutation.
-func (m *EarthquakeMutation) Significance() (r string, exists bool) {
-	v := m.significance
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldSignificance returns the old "significance" field's value of the Earthquake entity.
-// If the Earthquake object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *EarthquakeMutation) OldSignificance(ctx context.Context) (v string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldSignificance is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldSignificance requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldSignificance: %w", err)
-	}
-	return oldValue.Significance, nil
-}
-
-// ClearSignificance clears the value of the "significance" field.
-func (m *EarthquakeMutation) ClearSignificance() {
-	m.significance = nil
-	m.clearedFields[earthquake.FieldSignificance] = struct{}{}
-}
-
-// SignificanceCleared returns if the "significance" field was cleared in this mutation.
-func (m *EarthquakeMutation) SignificanceCleared() bool {
-	_, ok := m.clearedFields[earthquake.FieldSignificance]
-	return ok
-}
-
-// ResetSignificance resets all changes to the "significance" field.
-func (m *EarthquakeMutation) ResetSignificance() {
-	m.significance = nil
-	delete(m.clearedFields, earthquake.FieldSignificance)
 }
 
 // SetURL sets the "url" field.
@@ -1945,7 +1823,7 @@ func (m *EarthquakeMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *EarthquakeMutation) Fields() []string {
-	fields := make([]string, 0, 17)
+	fields := make([]string, 0, 15)
 	if m.location != nil {
 		fields = append(fields, earthquake.FieldLocationID)
 	}
@@ -1954,12 +1832,6 @@ func (m *EarthquakeMutation) Fields() []string {
 	}
 	if m.magnitude != nil {
 		fields = append(fields, earthquake.FieldMagitudeID)
-	}
-	if m.dept != nil {
-		fields = append(fields, earthquake.FieldDept)
-	}
-	if m.significance != nil {
-		fields = append(fields, earthquake.FieldSignificance)
 	}
 	if m.url != nil {
 		fields = append(fields, earthquake.FieldURL)
@@ -2011,10 +1883,6 @@ func (m *EarthquakeMutation) Field(name string) (ent.Value, bool) {
 		return m.TimeID()
 	case earthquake.FieldMagitudeID:
 		return m.MagitudeID()
-	case earthquake.FieldDept:
-		return m.Dept()
-	case earthquake.FieldSignificance:
-		return m.Significance()
 	case earthquake.FieldURL:
 		return m.URL()
 	case earthquake.FieldStatus:
@@ -2054,10 +1922,6 @@ func (m *EarthquakeMutation) OldField(ctx context.Context, name string) (ent.Val
 		return m.OldTimeID(ctx)
 	case earthquake.FieldMagitudeID:
 		return m.OldMagitudeID(ctx)
-	case earthquake.FieldDept:
-		return m.OldDept(ctx)
-	case earthquake.FieldSignificance:
-		return m.OldSignificance(ctx)
 	case earthquake.FieldURL:
 		return m.OldURL(ctx)
 	case earthquake.FieldStatus:
@@ -2111,20 +1975,6 @@ func (m *EarthquakeMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetMagitudeID(v)
-		return nil
-	case earthquake.FieldDept:
-		v, ok := value.(float64)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetDept(v)
-		return nil
-	case earthquake.FieldSignificance:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetSignificance(v)
 		return nil
 	case earthquake.FieldURL:
 		v, ok := value.(string)
@@ -2218,9 +2068,6 @@ func (m *EarthquakeMutation) SetField(name string, value ent.Value) error {
 // this mutation.
 func (m *EarthquakeMutation) AddedFields() []string {
 	var fields []string
-	if m.adddept != nil {
-		fields = append(fields, earthquake.FieldDept)
-	}
 	if m.addtsunami != nil {
 		fields = append(fields, earthquake.FieldTsunami)
 	}
@@ -2244,8 +2091,6 @@ func (m *EarthquakeMutation) AddedFields() []string {
 // was not set, or was not defined in the schema.
 func (m *EarthquakeMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
-	case earthquake.FieldDept:
-		return m.AddedDept()
 	case earthquake.FieldTsunami:
 		return m.AddedTsunami()
 	case earthquake.FieldNst:
@@ -2265,13 +2110,6 @@ func (m *EarthquakeMutation) AddedField(name string) (ent.Value, bool) {
 // type.
 func (m *EarthquakeMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case earthquake.FieldDept:
-		v, ok := value.(float64)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddDept(v)
-		return nil
 	case earthquake.FieldTsunami:
 		v, ok := value.(int32)
 		if !ok {
@@ -2323,12 +2161,6 @@ func (m *EarthquakeMutation) ClearedFields() []string {
 	}
 	if m.FieldCleared(earthquake.FieldMagitudeID) {
 		fields = append(fields, earthquake.FieldMagitudeID)
-	}
-	if m.FieldCleared(earthquake.FieldDept) {
-		fields = append(fields, earthquake.FieldDept)
-	}
-	if m.FieldCleared(earthquake.FieldSignificance) {
-		fields = append(fields, earthquake.FieldSignificance)
 	}
 	if m.FieldCleared(earthquake.FieldURL) {
 		fields = append(fields, earthquake.FieldURL)
@@ -2389,12 +2221,6 @@ func (m *EarthquakeMutation) ClearField(name string) error {
 	case earthquake.FieldMagitudeID:
 		m.ClearMagitudeID()
 		return nil
-	case earthquake.FieldDept:
-		m.ClearDept()
-		return nil
-	case earthquake.FieldSignificance:
-		m.ClearSignificance()
-		return nil
 	case earthquake.FieldURL:
 		m.ClearURL()
 		return nil
@@ -2447,12 +2273,6 @@ func (m *EarthquakeMutation) ResetField(name string) error {
 		return nil
 	case earthquake.FieldMagitudeID:
 		m.ResetMagitudeID()
-		return nil
-	case earthquake.FieldDept:
-		m.ResetDept()
-		return nil
-	case earthquake.FieldSignificance:
-		m.ResetSignificance()
 		return nil
 	case earthquake.FieldURL:
 		m.ResetURL()

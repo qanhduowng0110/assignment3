@@ -19,8 +19,6 @@ func (Earthquake) Fields() []ent.Field {
 	field.Int("location_id").Optional(), 
 	field.Int("time_id").Optional(), 
 	field.Int("magitude_id").Optional(), 
-	field.Float("dept").Optional(), 
-	field.String("significance").Optional(), 
 	field.String("url").Optional(), 
 	field.String("status").Optional(), 
 	field.Int32("tsunami").Optional(), 
