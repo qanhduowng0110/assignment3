@@ -14,7 +14,6 @@ var m = make(map[string]interface{})
 
 func SaveRequest(c *fiber.Ctx) {
 	Client := api.ConnectDB()
-	defer api.DB.Close()
 	ctx := context.Background()
 	for key, value := range c.GetReqHeaders() {
 		m[key] = value

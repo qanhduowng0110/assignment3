@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"entgo.io/ent/dialect"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 )
 
 var ctx *fiber.Ctx

@@ -7,18 +7,18 @@ import (
 	"assignment3/ent/magnitude"
 	"assignment3/ent/type_eathquake"
 	"assignment3/middleware"
-	"assignment3/services"
+	"context"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
-	"github.com/gofiber/fiber"
+	"github.com/gofiber/fiber/v2"
 )
 
 // Filter as required
-func QueryEarthquakes(c *fiber.Ctx, pageSize int, pageIndex int, mag float64, eq_type string, place string, daysAgo int) []*ent.Earthquake {
-	services.GetAll()
+func QueryEarthquakes(ctx context.Context, pageSize int, pageIndex int, mag float64, eq_type string, place string, daysAgo int) ([]*ent.Earthquake, error) {
+	var c *fiber.Ctx
+	GetAll(c)
 	Client := api.ConnectDB()
-	defer api.DB.Close()
 	query := Client.Earthquake.Query()
 	// Filter by magnitude
 	if mag != 0 {
@@ -43,9 +43,9 @@ func QueryEarthquakes(c *fiber.Ctx, pageSize int, pageIndex int, mag float64, eq
 
 	earthquakes_page, errpage := query.Limit(pageSize).Offset((pageIndex - 1) * pageSize).Clone().Order(func(s *sql.Selector) {
 		sql.OrderByField("id", sql.OrderDesc())
-	}).All(c)
+	}).All(ctx)
 	middleware.CheckError(errpage)
 	middleware.SaveRequest(c)
-	return earthquakes_page
+	return earthquakes_page, errpage
 
 }

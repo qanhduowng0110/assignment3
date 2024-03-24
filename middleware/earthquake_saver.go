@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"assignment3/cmd/api"
+	"assignment3/convert"
 	"assignment3/model"
-	"assignment3/services"
 	"context"
 	"encoding/json"
 	"time"
@@ -15,7 +15,6 @@ var earthquake model.EarthquakeViewModel
 
 func ApiImportEarthquake() {
 	Client := api.ConnectDB()
-	defer api.DB.Close()
 	url := "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
 	res := fetch.Method("GET").FiberFetch(url)
 	if res.Error != nil {
@@ -34,7 +33,7 @@ func ApiImportEarthquake() {
 
 	for i := 0; i < len(earthquake.Features); i++ {
 		timeNew, err_time := Client.Time.Create().
-			SetDateTime(services.ConvertIntToTimeStamp(earthquake.Features[i].Properties.Time)).
+			SetDateTime(convert.ConvertIntToTimeStamp(earthquake.Features[i].Properties.Time)).
 			SetCreatedAt(time.Now()).
 			SetUpdatedAt(time.Now()).
 			Save(ctx)
@@ -74,7 +73,7 @@ func ApiImportEarthquake() {
 			SetNet(earthquake.Features[i].Properties.Net).
 			SetCode(earthquake.Features[i].Properties.Code).
 			SetSources(earthquake.Features[i].Properties.Sources).
-			SetNst(services.ConvertInt32ToInt((earthquake.Features[i].Properties.Nst))).
+			SetNst(convert.ConvertInt32ToInt((earthquake.Features[i].Properties.Nst))).
 			SetDmin(earthquake.Features[i].Properties.Dmin).
 			SetRms(earthquake.Features[i].Properties.Rms).
 			SetGap(earthquake.Features[i].Properties.Gap).

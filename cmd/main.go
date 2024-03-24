@@ -5,7 +5,9 @@ import (
 	"assignment3/router"
 	"os"
 
+	_ "entgo.io/ent/dialect/sql"
 	"github.com/gofiber/fiber/v2"
+	_ "github.com/lib/pq"
 )
 
 const defaultPort = "3000"
@@ -25,6 +27,6 @@ func main() {
 	// Set Routes
 	App := fiber.New()
 	router.SetRoutes(App)
-	App.Listen("3000")
+	App.Listen(":3000")
 
 }

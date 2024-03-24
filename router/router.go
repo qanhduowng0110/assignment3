@@ -3,15 +3,14 @@ package router
 import (
 	"assignment3/middleware"
 	"assignment3/services"
+	"context"
 	"strconv"
-
-	"github.com/gofiber/fiber"
 	"github.com/gofiber/fiber/v2"
 )
 
 func SetRoutes(app *fiber.App) {
 	app.Get("/sync", func(c *fiber.Ctx) error {
-		earthquakes := services.SyncData()
+		earthquakes := services.SyncData(c)
 		c.SendString("Sucess!")
 		return c.JSON(earthquakes)
 	})
@@ -22,6 +21,7 @@ func SetRoutes(app *fiber.App) {
 	})
 
 	app.Get("/filter", func(c *fiber.Ctx) error {
+		ctx := context.Background()
 		earthquakes := services.GetAll(c)
 		pageSize, errSize := strconv.Atoi(c.Query("pageSize"))
 		middleware.CheckError(errSize)
@@ -29,13 +29,11 @@ func SetRoutes(app *fiber.App) {
 		middleware.CheckError(errIndex)
 		mag, errMag := strconv.ParseFloat(c.Query("mag"), 64)
 		middleware.CheckError(errMag)
-		eqType, errEqtype := c.Query("eqType")
-		middleware.CheckError(errEqtype)
-		place, errPlace := c.Query("place")
-		middleware.CheckError(errPlace)
+		eqType := c.Query("eqType")
+		place := c.Query("place")
 		daysAgo, errDaysAgo := strconv.Atoi(c.Query("daysAgo"))
 		middleware.CheckError(errDaysAgo)
-		earthquakes = services.QueryEarthquakes(c, pageIndex, pageSize, mag, eqType, place, daysAgo)
+		earthquakes, _ = services.QueryEarthquakes(ctx, pageIndex, pageSize, mag, eqType, place, daysAgo)
 		c.SendString("Sucess!")
 		return c.JSON(earthquakes)
 	})
