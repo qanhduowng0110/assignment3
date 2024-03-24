@@ -1,0 +1,7 @@
+type Token {
+  id: ID!
+  userID: ID
+  tokenValue: String!
+  expirationTime: Time!
+  user: User
+}

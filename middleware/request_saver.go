@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"assignment3/cmd/api"
+	"assignment3/convert"
 	"assignment3/model"
 	"context"
 	"time"
@@ -18,13 +19,14 @@ func SaveRequest(c *fiber.Ctx) {
 	for key, value := range c.GetReqHeaders() {
 		m[key] = value
 	}
+
 	_, err := Client.Request.Create().
 		SetRequestURL(c.OriginalURL()).
 		SetRequestMethod(c.Method()).
 		SetRequestHeaders(m).
-		//SetRequestBody().
+		SetRequestBody(convert.ConvertByteToMap(c.Request().Body())).
 		SetResponseStatusCode(int32(c.Response().StatusCode())).
-		// SetResponseBody().
+		SetResponseBody(convert.ConvertByteToMap(c.Response().Body())).
 		SetCreatedAt(time.Now()).
 		SetUpdatedAt(time.Now()).
 		Save(ctx)

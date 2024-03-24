@@ -1,0 +1,7 @@
+type Session {
+  id: ID!
+  userID: ID
+  loginTime: Time!
+  lastActivity: Time!
+  user: User
+}

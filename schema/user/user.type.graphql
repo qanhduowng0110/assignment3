@@ -1,0 +1,14 @@
+type User {
+  id: ID!
+  username: String!
+  email: String!
+  password: String!
+  role: Int!
+  createdAt: Time!
+  updatedAt: Time!
+  deletedAt: Time
+  session: [Session!]
+  passwordResetRequest: [PasswordResetRequest!]
+  credentials: [Credentials!]
+  token: [Token!]
+}

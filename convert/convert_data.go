@@ -41,13 +41,23 @@ func ConvertInt32ToInt(i int32) int {
 	return int(i)
 }
 
-func convertMapToJSON(obj map[string]interface{}) string {
+func ConvertMapToJSON(obj map[string]interface{}) string {
 	bytes, err := json.Marshal(obj)
 	if err != nil {
 		log.Println(err)
 		return ""
 	}
 	return string(bytes)
+}
+
+func ConvertByteToMap(b []byte) map[string]interface{} {
+	var m map[string]interface{}
+    err := json.Unmarshal(b, &m)
+    if err!= nil {
+        log.Println(err)
+        return nil
+    }
+    return m
 }
 
 func ConvertEntToModel(entEarthquakes []*ent.Earthquake) []*model.Earthquakes {

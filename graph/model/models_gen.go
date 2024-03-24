@@ -2,11 +2,29 @@
 
 package model
 
+import (
+	"time"
+)
+
 type AssociatedEvent struct {
 	ID           int    `json:"id"`
 	EarthquakeID []*int `json:"earthquake_id"`
 	CreateAt     string `json:"create_at"`
 	UpdateAt     string `json:"update_at"`
+}
+
+type CreateUser struct {
+	Username string `json:"username"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type Credentials struct {
+	ID             string    `json:"id"`
+	UserID         *string   `json:"userID,omitempty"`
+	HashedPassword string    `json:"hashedPassword"`
+	LastLogin      time.Time `json:"lastLogin"`
+	User           *User     `json:"user,omitempty"`
 }
 
 type DayInput struct {
@@ -48,6 +66,11 @@ type Location struct {
 	UpdateAt  string  `json:"update_at"`
 }
 
+type Login struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
 type Magnitudes struct {
 	ID            int      `json:"id"`
 	MagitudeValue *float64 `json:"magitude_value,omitempty"`
@@ -61,7 +84,19 @@ type PaginationInput struct {
 	Offset *int `json:"offset,omitempty"`
 }
 
+type PasswordResetRequest struct {
+	ID             string    `json:"id"`
+	UserID         *string   `json:"userID,omitempty"`
+	TokenValue     string    `json:"tokenValue"`
+	ExpirationTime time.Time `json:"expirationTime"`
+	User           *User     `json:"user,omitempty"`
+}
+
 type Query struct {
+}
+
+type RefreshTokenInput struct {
+	Token string `json:"token"`
 }
 
 type Requests struct {
@@ -77,9 +112,17 @@ type Requests struct {
 	UpdateAt           *string `json:"update_at,omitempty"`
 }
 
-type Roles struct {
-	ID       int    `json:"id"`
-	RoleName string `json:"role_name"`
+type ResetPasswordInput struct {
+	OldPassword string `json:"oldPassword"`
+	NewPassword string `json:"newPassword"`
+}
+
+type Session struct {
+	ID           string    `json:"id"`
+	UserID       *string   `json:"userID,omitempty"`
+	LoginTime    time.Time `json:"loginTime"`
+	LastActivity time.Time `json:"lastActivity"`
+	User         *User     `json:"user,omitempty"`
 }
 
 type Times struct {
@@ -87,6 +130,14 @@ type Times struct {
 	DateTime string `json:"date_time"`
 	CreateAt string `json:"create_at"`
 	UpdateAt string `json:"update_at"`
+}
+
+type Token struct {
+	ID             string    `json:"id"`
+	UserID         *string   `json:"userID,omitempty"`
+	TokenValue     string    `json:"tokenValue"`
+	ExpirationTime time.Time `json:"expirationTime"`
+	User           *User     `json:"user,omitempty"`
 }
 
 type TypeEathquake struct {
@@ -97,10 +148,17 @@ type TypeEathquake struct {
 	UpdateAt       string    `json:"update_at"`
 }
 
-type Users struct {
-	ID       int    `json:"id"`
-	UserName string `json:"user_name"`
-	Password string `json:"password"`
-	CreateAt string `json:"create_at"`
-	RoleID   int    `json:"role_id"`
+type User struct {
+	ID                   string                  `json:"id"`
+	Username             string                  `json:"username"`
+	Email                string                  `json:"email"`
+	Password             string                  `json:"password"`
+	Role                 int                     `json:"role"`
+	CreatedAt            time.Time               `json:"createdAt"`
+	UpdatedAt            time.Time               `json:"updatedAt"`
+	DeletedAt            *time.Time              `json:"deletedAt,omitempty"`
+	Session              []*Session              `json:"session,omitempty"`
+	PasswordResetRequest []*PasswordResetRequest `json:"passwordResetRequest,omitempty"`
+	Credentials          []*Credentials          `json:"credentials,omitempty"`
+	Token                []*Token                `json:"token,omitempty"`
 }
